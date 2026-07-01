@@ -25,17 +25,18 @@ if not PATH.is_dir():
     sys.exit(1)
 
 if not any(PATH.iterdir()):
-    print("that directpry is empty bro")
+    print("that directory is empty bro")
     sys.exit(1)
 
 print(f"\n{PATH}")
-if input("this will irreversibly rename image files in the dir. is this the correct path? (y/n) ") != "y":
+if input("this will irreversibly rename image files in the dir. is this the correct path? (y/n)  ") != "y":
     print("aight bro take ur time\naborting")
     sys.exit(1)
 
 os.chdir(PATH)
 
 counter = 0
+del_counter = 0
 seen_hashes = set()
 
 print("\nrenaming ur files")
@@ -48,6 +49,7 @@ for file in PATH.iterdir():
 
     if file_hash in seen_hashes:
         print(f"removing duplicate: {file}")
+        del_counter += 1
         os.remove(file)
         continue
     seen_hashes.add(file_hash)
@@ -78,3 +80,4 @@ for file in PATH.iterdir():
     except: print(f"{file} is not an image or is corrupted")
 
 print(f"\nrenamed {counter} image files")
+print(f"deleted {del_counter} image files")
